@@ -1,5 +1,6 @@
 package cc.oxshan.admin.controller;
 
+import cc.oxshan.admin.annotation.RequiresPermission;
 import cc.oxshan.api.order.OrderService;
 import cc.oxshan.api.order.dto.OrderDTO;
 import cc.oxshan.common.core.context.ShopContext;
@@ -22,6 +23,7 @@ public class OrderController {
     /**
      * 查询订单列表
      */
+    @RequiresPermission("order:order:list")
     @GetMapping("/list")
     public Result<List<OrderDTO>> list() {
         Long shopId = ShopContext.getShopId();
@@ -32,6 +34,7 @@ public class OrderController {
     /**
      * 查询订单详情
      */
+    @RequiresPermission("order:order:detail")
     @GetMapping("/{orderId}")
     public Result<OrderDTO> detail(@PathVariable Long orderId) {
         Long shopId = ShopContext.getShopId();

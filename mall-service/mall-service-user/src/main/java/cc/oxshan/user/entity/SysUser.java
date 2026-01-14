@@ -19,6 +19,7 @@ public class SysUser {
     private String email;
     private String avatar;
     private Integer status;
+    private Integer isDeleted;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

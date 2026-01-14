@@ -26,4 +26,68 @@
           AND r.status = 1
     </select>
 
+    <select id="selectPage" resultMap="BaseResultMap">
+        SELECT *
+        FROM sys_role
+        WHERE shop_id = #{shopId}
+        ORDER BY sort ASC, created_at DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="countByShopId" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM sys_role
+        WHERE shop_id = #{shopId}
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT *
+        FROM sys_role
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_role (shop_id, template_id, code, name, type, is_system, status, sort, remark)
+        VALUES (#{shopId}, #{templateId}, #{code}, #{name}, #{type}, #{isSystem}, #{status}, #{sort}, #{remark})
+    </insert>
+
+    <update id="updateById">
+        UPDATE sys_role
+        SET name = #{name},
+            status = #{status},
+            sort = #{sort},
+            remark = #{remark}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM sys_role
+        WHERE id = #{id}
+    </delete>
+
+    <select id="countUsersByRoleId" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM sys_user_role
+        WHERE role_id = #{roleId}
+    </select>
+
+    <delete id="deleteRoleMenus">
+        DELETE FROM sys_role_menu
+        WHERE role_id = #{roleId}
+    </delete>
+
+    <insert id="insertRoleMenus">
+        INSERT INTO sys_role_menu (role_id, menu_id)
+        VALUES
+        <foreach collection="menuIds" item="menuId" separator=",">
+            (#{roleId}, #{menuId})
+        </foreach>
+    </insert>
+
+    <select id="selectMenuIdsByRoleId" resultType="java.lang.Long">
+        SELECT menu_id
+        FROM sys_role_menu
+        WHERE role_id = #{roleId}
+    </select>
+
 </mapper>
