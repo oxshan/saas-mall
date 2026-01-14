@@ -17,7 +17,6 @@ import java.util.List;
  * 封装 SysMenuService 的 Dubbo 调用
  */
 @Component
-@RequiredArgsConstructor
 public class SysMenuServiceClient {
 
     @DubboReference

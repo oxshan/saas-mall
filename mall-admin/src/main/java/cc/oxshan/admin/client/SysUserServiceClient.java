@@ -20,6 +20,7 @@ public class SysUserServiceClient {
     @DubboReference
     private SysUserService sysUserService;
 
+
     /**
      * 根据用户名查询用户
      */
