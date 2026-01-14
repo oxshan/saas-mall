@@ -44,4 +44,11 @@ public class BaseResult implements Serializable {
     this.msg = ErrorCodeEnum.SUCCESS.getMsg();
   }
 
+  /**
+   * 判断调用是否成功
+   */
+  public boolean isSuccess() {
+    return Boolean.TRUE.equals(this.success);
+  }
+
 }
