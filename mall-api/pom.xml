@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>cc.oxshan</groupId>
+        <artifactId>saas-mall</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>mall-api</artifactId>
+    <packaging>pom</packaging>
+    <name>mall-api</name>
+    <description>Dubbo 接口定义模块</description>
+
+    <modules>
+        <module>mall-api-user</module>
+        <module>mall-api-member</module>
+        <module>mall-api-tenant</module>
+        <module>mall-api-shop</module>
+        <module>mall-api-product</module>
+        <module>mall-api-inventory</module>
+        <module>mall-api-search</module>
+        <module>mall-api-trade</module>
+        <module>mall-api-order</module>
+        <module>mall-api-payment</module>
+        <module>mall-api-promotion</module>
+        <module>mall-api-logistics</module>
+        <module>mall-api-aftersale</module>
+        <module>mall-api-message</module>
+        <module>mall-api-content</module>
+    </modules>
+
+</project>

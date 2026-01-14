@@ -1,0 +1,64 @@
+# ==================== IDE ====================
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.swp
+*.swo
+
+# ==================== Maven ====================
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# ==================== Java ====================
+*.class
+*.jar
+*.war
+*.ear
+*.log
+hs_err_pid*
+
+# ==================== Logs ====================
+logs/
+*.log
+*.log.*
+
+# ==================== OS ====================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==================== Environment ====================
+*.env
+*.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ==================== Node (for frontend) ====================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+dist/
+build/
+
+# ==================== Docker ====================
+docker/mysql/data/
+docker/redis/data/
+docker/rocketmq/store/
+docker/elasticsearch/data/
+
+# ==================== Temp ====================
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup

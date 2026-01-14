@@ -1,0 +1,151 @@
+version: '3.8'
+
+services:
+  # MySQL 数据库
+  mysql:
+    image: registry.cn-hangzhou.aliyuncs.com/zhengqing/mysql:8.0
+    container_name: mall-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root123456
+      - TZ=Asia/Shanghai
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --lower_case_table_names=1
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mall-net
+    restart: unless-stopped
+
+  # Redis 缓存
+  redis:
+    image: registry.cn-hangzhou.aliyuncs.com/zhengqing/redis:6.0.8
+    container_name: mall-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes --requirepass redis123456
+    networks:
+      - mall-net
+    restart: unless-stopped
+
+  # Nacos 注册/配置中心
+  nacos:
+    image: registry.cn-hangzhou.aliyuncs.com/zhengqing/nacos-server:2.2.0
+    container_name: mall-nacos
+    environment:
+      - MODE=standalone
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=mysql
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=root123456
+      - MYSQL_SERVICE_DB_NAME=nacos_config
+      - JVM_XMS=256m
+      - JVM_XMX=256m
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - mall-net
+    restart: unless-stopped
+
+  # RocketMQ NameServer
+  rocketmq-namesrv:
+    image: apache/rocketmq:5.1.4
+    container_name: mall-rocketmq-namesrv
+    ports:
+      - "9876:9876"
+    environment:
+      - JAVA_OPT_EXT=-Xms256m -Xmx256m
+    command: sh mqnamesrv
+    networks:
+      - mall-net
+    restart: unless-stopped
+
+  # RocketMQ Broker
+  rocketmq-broker:
+    image: apache/rocketmq:5.1.4
+    container_name: mall-rocketmq-broker
+    ports:
+      - "10911:10911"
+      - "10909:10909"
+    environment:
+      - JAVA_OPT_EXT=-Xms256m -Xmx256m
+    command: sh mqbroker -n rocketmq-namesrv:9876 -c /home/rocketmq/conf/broker.conf
+    volumes:
+      - ./rocketmq/broker/conf/broker.conf:/home/rocketmq/conf/broker.conf
+      - rocketmq-data:/home/rocketmq/store
+    depends_on:
+      - rocketmq-namesrv
+    networks:
+      - mall-net
+    restart: unless-stopped
+
+  # RocketMQ Dashboard
+  rocketmq-dashboard:
+    image: apacherocketmq/rocketmq-dashboard:latest
+    container_name: mall-rocketmq-dashboard
+    ports:
+      - "9877:8080"
+    environment:
+      - JAVA_OPTS=-Xms128m -Xmx128m -Drocketmq.namesrv.addr=rocketmq-namesrv:9876
+    depends_on:
+      - rocketmq-namesrv
+    networks:
+      - mall-net
+    restart: unless-stopped
+
+  # Elasticsearch 搜索引擎
+  elasticsearch:
+    image: elasticsearch:8.11.0
+    container_name: mall-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms256m -Xmx256m
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    networks:
+      - mall-net
+    restart: unless-stopped
+
+  # Kibana (ES 可视化)
+  kibana:
+    image: kibana:8.11.0
+    container_name: mall-kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - mall-net
+    restart: unless-stopped
+
+networks:
+  mall-net:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  redis-data:
+  rocketmq-data:
+  es-data:

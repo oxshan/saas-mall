@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>cc.oxshan</groupId>
+        <artifactId>saas-mall</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>mall-service</artifactId>
+    <packaging>pom</packaging>
+    <name>mall-service</name>
+    <description>服务实现模块</description>
+
+    <modules>
+        <module>mall-service-gateway</module>
+        <module>mall-service-tenant</module>
+        <module>mall-service-user</module>
+        <module>mall-service-member</module>
+        <module>mall-service-shop</module>
+        <module>mall-service-product</module>
+        <module>mall-service-inventory</module>
+        <module>mall-service-search</module>
+        <module>mall-service-trade</module>
+        <module>mall-service-order</module>
+        <module>mall-service-payment</module>
+        <module>mall-service-promotion</module>
+        <module>mall-service-logistics</module>
+        <module>mall-service-aftersale</module>
+        <module>mall-service-message</module>
+        <module>mall-service-content</module>
+    </modules>
+
+</project>
