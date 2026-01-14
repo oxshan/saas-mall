@@ -20,7 +20,6 @@
         <module>mall-common-redis</module>
         <module>mall-common-mybatis</module>
         <module>mall-common-rocketmq</module>
-        <module>mall-common-security</module>
     </modules>
 
 </project>

@@ -16,7 +16,6 @@
     <description>服务实现模块</description>
 
     <modules>
-        <module>mall-service-gateway</module>
         <module>mall-service-tenant</module>
         <module>mall-service-user</module>
         <module>mall-service-member</module>

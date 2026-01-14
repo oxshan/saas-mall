@@ -10,55 +10,37 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mall-admin</artifactId>
-    <name>mall-admin</name>
-    <description>商家后台 BFF</description>
+    <artifactId>mall-gateway</artifactId>
+    <name>mall-gateway</name>
+    <description>API 网关服务</description>
 
     <dependencies>
+        <!-- Spring Cloud Gateway -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-nacos-spring-boot-starter</artifactId>
-        </dependency>
-        <!-- Spring Cloud Nacos Discovery -->
+        <!-- Nacos Discovery -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-        <!-- APIs -->
+        <!-- Nacos Config -->
         <dependency>
-            <groupId>cc.oxshan</groupId>
-            <artifactId>mall-api-user</artifactId>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
+        <!-- LoadBalancer -->
         <dependency>
-            <groupId>cc.oxshan</groupId>
-            <artifactId>mall-api-shop</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
-        <dependency>
-            <groupId>cc.oxshan</groupId>
-            <artifactId>mall-api-product</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cc.oxshan</groupId>
-            <artifactId>mall-api-order</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cc.oxshan</groupId>
-            <artifactId>mall-api-promotion</artifactId>
-        </dependency>
-        <!-- Common -->
+        <!-- Common Core -->
         <dependency>
             <groupId>cc.oxshan</groupId>
             <artifactId>mall-common-core</artifactId>
         </dependency>
-        <!-- JWT (仅用于登录接口生成 token) -->
+        <!-- JWT -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -70,11 +52,6 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
-        </dependency>
-        <!-- Spring Security (用于密码加密) -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-crypto</artifactId>
         </dependency>
     </dependencies>
 

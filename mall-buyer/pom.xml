@@ -11,12 +11,57 @@
     </parent>
 
     <artifactId>mall-buyer</artifactId>
-    <packaging>pom</packaging>
     <name>mall-buyer</name>
     <description>买家端 BFF</description>
 
-    <modules>
-        <module>mall-buyer-api</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-nacos-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- APIs -->
+        <dependency>
+            <groupId>cc.oxshan</groupId>
+            <artifactId>mall-api-user</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cc.oxshan</groupId>
+            <artifactId>mall-api-product</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cc.oxshan</groupId>
+            <artifactId>mall-api-trade</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cc.oxshan</groupId>
+            <artifactId>mall-api-order</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cc.oxshan</groupId>
+            <artifactId>mall-api-search</artifactId>
+        </dependency>
+        <!-- Common -->
+        <dependency>
+            <groupId>cc.oxshan</groupId>
+            <artifactId>mall-common-core</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

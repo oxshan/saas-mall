@@ -19,6 +19,8 @@
         <module>mall-api</module>
         <!-- 服务模块 -->
         <module>mall-service</module>
+        <!-- API 网关 -->
+        <module>mall-gateway</module>
         <!-- 商家后台 BFF -->
         <module>mall-admin</module>
         <!-- 买家端 BFF -->

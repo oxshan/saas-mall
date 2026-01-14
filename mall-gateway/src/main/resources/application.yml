@@ -1,0 +1,51 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mall-gateway
+  config:
+    import: optional:nacos:mall-gateway.yml
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        file-extension: yml
+        import-check:
+          enabled: false
+    gateway:
+      routes:
+        # 商家后台路由
+        - id: mall-admin
+          uri: lb://mall-admin
+          predicates:
+            - Path=/admin/**
+          filters:
+            - StripPrefix=1
+        # 买家端路由
+        - id: mall-buyer
+          uri: lb://mall-buyer
+          predicates:
+            - Path=/buyer/**
+          filters:
+            - StripPrefix=1
+      # 全局跨域配置
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+
+# JWT 配置
+jwt:
+  secret: your-256-bit-secret-key-here-must-be-long-enough
+  expiration: 7200000
+
+# 日志配置
+logging:
+  level:
+    cc.oxshan.gateway: DEBUG

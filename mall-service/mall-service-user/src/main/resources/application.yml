@@ -28,5 +28,8 @@ dubbo:
   protocol:
     name: dubbo
     port: 20881
+    host: 192.168.31.157
   registry:
     address: nacos://localhost:8848
+    parameters:
+      register-ip: 192.168.31.157
