@@ -1,24 +1,25 @@
-// 用户相关类型
-export interface LoginReq {
-  username: string
-  password: string
-}
-
-export interface LoginRsp {
-  token: string
-  userId: number
-  shopId: number
-  username: string
-  nickname: string
-}
-
+// 用户信息
 export interface UserInfo {
-  id: number
-  shopId: number
-  username: string
-  nickname: string
-  phone?: string
-  email?: string
-  avatar?: string
-  status: number
+  id: number;
+  shopId: number;
+  username: string;
+  nickname: string;
+  phone?: string;
+  email?: string;
+  avatar?: string;
+  status: number;
+  roles: string[];
+  permissions: string[];
+}
+
+// 登录请求
+export interface LoginParams {
+  username: string;
+  password: string;
+}
+
+// 登录响应
+export interface LoginResult {
+  token: string;
+  userInfo: UserInfo;
 }

@@ -1,7 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useUserStore } from '@/stores/useUserStore'
 import Login from '@/pages/Login'
-import Home from '@/pages/Home'
+import BasicLayout from '@/layouts/BasicLayout'
+import Dashboard from '@/pages/Dashboard'
+import UserList from '@/pages/system/UserList'
+import RoleList from '@/pages/system/RoleList'
+import MenuList from '@/pages/system/MenuList'
 
 // 路由守卫
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -18,10 +22,16 @@ const AppRouter: React.FC = () => {
           path="/"
           element={
             <PrivateRoute>
-              <Home />
+              <BasicLayout />
             </PrivateRoute>
           }
-        />
+        >
+          <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="system/user" element={<UserList />} />
+          <Route path="system/role" element={<RoleList />} />
+          <Route path="system/menu" element={<MenuList />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

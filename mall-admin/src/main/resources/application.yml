@@ -19,5 +19,5 @@ dubbo:
     timeout: 30000
 
 jwt:
-  secret: your-256-bit-secret-key-here-must-be-long-enough-for-hmac-sha256
+  secret: your-256-bit-secret-key-here-must-be-long-enough
   expiration: 7200000

@@ -14,7 +14,7 @@ import java.util.List;
  * 菜单管理 Controller
  */
 @RestController
-@RequestMapping("/admin/menu")
+@RequestMapping("/menu")
 @RequiredArgsConstructor
 public class MenuController {
 

@@ -9,15 +9,22 @@ import type { LoginReq } from '@/types/user'
 const Login: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-  const setToken = useUserStore((state) => state.setToken)
+  const { setToken, setUserInfo } = useUserStore()
 
   const onFinish = async (values: LoginReq) => {
     setLoading(true)
     try {
       const res = await login(values)
       setToken(res.token)
+      setUserInfo({
+        id: res.userId,
+        shopId: res.shopId,
+        username: res.username,
+        nickname: res.nickname,
+        status: 1,
+      })
       message.success('登录成功')
-      navigate('/')
+      navigate('/dashboard')
     } catch (error) {
       message.error((error as Error).message || '登录失败')
     } finally {

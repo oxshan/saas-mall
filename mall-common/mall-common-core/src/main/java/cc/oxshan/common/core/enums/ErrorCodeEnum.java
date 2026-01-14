@@ -25,7 +25,8 @@ public enum ErrorCodeEnum {
 
     // 权限错误码 3xxx
     PERMISSION_DENIED(3001, "没有操作权限"),
-    ROLE_NOT_FOUND(3002, "角色不存在");
+    ROLE_NOT_FOUND(3002, "角色不存在"),
+    USER_NOT_FOUND(3003, "用户不存在");
 
     private final int code;
     private final String msg;

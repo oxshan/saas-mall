@@ -16,7 +16,7 @@ import java.util.List;
  * 角色管理 Controller
  */
 @RestController
-@RequestMapping("/admin/role")
+@RequestMapping("/role")
 @RequiredArgsConstructor
 public class RoleController {
 

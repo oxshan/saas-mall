@@ -1,5 +1,6 @@
 package cc.oxshan.admin.util;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,5 +50,24 @@ public class JwtUtils {
                 .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSigningKey())
                 .compact();
+    }
+
+    /**
+     * 解析 Token
+     */
+    public Claims parseToken(String token) {
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    /**
+     * 从 Token 获取用户ID
+     */
+    public Long getUserId(String token) {
+        Claims claims = parseToken(token);
+        return claims.get(CLAIM_USER_ID, Long.class);
     }
 }

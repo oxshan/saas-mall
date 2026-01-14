@@ -4,6 +4,7 @@ import cc.oxshan.admin.annotation.RequiresPermission;
 import cc.oxshan.admin.client.SysUserServiceClient;
 import cc.oxshan.admin.dto.AssignRolesDTO;
 import cc.oxshan.admin.dto.ResetPasswordDTO;
+import cc.oxshan.admin.util.HeaderUtils;
 import cc.oxshan.api.user.dto.SysUserDTO;
 import cc.oxshan.common.core.context.ShopContext;
 import cc.oxshan.common.core.result.PageResult;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * 用户管理 Controller
  */
 @RestController
-@RequestMapping("/admin/user")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -33,15 +34,6 @@ public class UserController {
         Long shopId = ShopContext.getShopId();
         PageResult<SysUserDTO> page = userServiceClient.listUsers(shopId, pageNum, pageSize);
         return Result.ok(page);
-    }
-
-    /**
-     * 用户详情
-     */
-    @GetMapping("/{id}")
-    public Result<SysUserDTO> getUserById(@PathVariable Long id) {
-        SysUserDTO user = userServiceClient.getUserById(id);
-        return Result.ok(user);
     }
 
     /**

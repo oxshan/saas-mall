@@ -1,340 +1,173 @@
-# React 前端技术约定
+# React 前端开发规范
 
-## 一、技术栈概览
+本项目使用 **Ant Design Pro** + **UmiJS** 技术栈。
 
-| 技术 | 版本/说明 |
-|------|-----------|
-| React | 18 |
-| TypeScript | - |
-| Vite | 构建工具 |
-| Tailwind CSS | 样式方案 |
-| Ant Design | UI 组件库 |
-| Zustand | 状态管理 |
-| Axios | HTTP 请求库 |
-| Yarn | 包管理器 |
+## 技术栈
 
----
-
-## 二、项目结构
-
-```
-ui/                           # 前端项目
-├── src/
-│   ├── api/                  # API 请求封装
-│   ├── assets/               # 静态资源
-│   ├── components/           # 公共组件
-│   ├── hooks/                # 自定义 Hooks
-│   ├── pages/                # 页面组件
-│   ├── stores/               # Zustand 状态管理
-│   ├── types/                # TypeScript 类型定义
-│   ├── utils/                # 工具函数
-│   ├── App.tsx
-│   └── main.tsx
-├── .env.development          # 开发环境配置
-├── .env.production           # 生产环境配置
-├── Dockerfile                # 前端 Docker 构建
-├── nginx.conf                # Nginx 配置
-├── .dockerignore
-├── package.json
-└── tsconfig.json
-```
-
----
-
-## 三、命名规范
-
-| 类型 | 规范 | 示例 |
+| 技术 | 版本 | 说明 |
 |------|------|------|
-| 组件文件 | PascalCase | `UserProfile.tsx` |
-| 工具/hooks 文件 | camelCase | `useAuth.ts`, `formatDate.ts` |
-| 变量/函数 | camelCase | `userName`, `getUserInfo()` |
-| 常量 | UPPER_SNAKE_CASE | `API_BASE_URL` |
-| 类型/接口 | PascalCase | `UserInfo`, `ApiResponse` |
-| CSS 类名 | Tailwind 或 kebab-case | `text-center`, `user-card` |
+| UmiJS | 4.x | 企业级前端框架 |
+| Ant Design | 5.x | UI 组件库 |
+| Ant Design Pro Components | 2.x | 高级业务组件 |
+| TypeScript | 5.x | 类型系统 |
 
----
+## 目录结构
 
-## 四、组件规范
+```
+src/
+├── pages/           # 页面组件
+│   ├── Login/       # 登录页
+│   ├── Dashboard/   # 工作台
+│   └── System/      # 系统管理
+├── services/        # API 服务
+├── types/           # 类型定义
+├── utils/           # 工具函数
+├── access.ts        # 权限配置
+└── app.tsx          # 运行时配置
+```
 
-- 使用函数式组件 + Hooks
-- 组件文件使用 `.tsx` 扩展名
-- 复杂组件使用文件夹组织，简单组件使用单文件
+## 命名规范
+
+### 文件命名
+- 页面组件: `PascalCase` 目录 + `index.tsx`
+- 服务文件: `camelCase.ts`
+- 类型文件: `camelCase.ts`
+
+### 变量命名
+- 组件: `PascalCase`
+- 函数/变量: `camelCase`
+- 常量: `UPPER_SNAKE_CASE`
+- 类型/接口: `PascalCase`
+
+## 组件规范
+
+### 页面组件
+
+使用 `PageContainer` 包裹页面内容：
 
 ```tsx
-// 推荐写法
-const UserProfile: React.FC<Props> = ({ userId }) => {
-  return <div>...</div>;
+import { PageContainer } from '@ant-design/pro-components';
+
+const MyPage: React.FC = () => {
+  return (
+    <PageContainer>
+      {/* 页面内容 */}
+    </PageContainer>
+  );
 };
 
-export default UserProfile;
+export default MyPage;
 ```
 
----
+### 表格页面
 
-## 五、TypeScript 规范
+使用 `ProTable` 实现 CRUD 表格：
 
-- 禁止使用 `any`，必要时使用 `unknown`
-- 接口定义统一放在 `types/` 目录
-- API 响应类型必须定义
+```tsx
+import { ProTable } from '@ant-design/pro-components';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
 
-```typescript
-// types/user.ts
-export interface UserInfo {
-  id: number;
-  userName: string;
-  email: string;
+const columns: ProColumns<DataType>[] = [
+  { title: '名称', dataIndex: 'name' },
+  { title: '操作', valueType: 'option', render: () => [...] },
+];
+
+<ProTable
+  actionRef={actionRef}
+  columns={columns}
+  rowKey="id"
+  request={async (params) => {
+    const res = await fetchData(params);
+    return { data: res.list, total: res.total, success: true };
+  }}
+/>
+```
+
+## API 服务规范
+
+### 服务文件结构
+
+```tsx
+// services/user.ts
+import { request } from '@umijs/max';
+
+export async function getUserList(params: PageParams) {
+  return request<PageResult<UserItem>>('/admin/user/page', {
+    method: 'GET',
+    params,
+  });
 }
 ```
 
----
+### 响应数据处理
 
-## 六、状态管理 (Zustand)
+统一在 `utils/request.ts` 中处理响应拦截：
+- 成功: 返回 `res.data`
+- 失败: 显示错误消息并 reject
+- 401: 清除 token 并跳转登录页
 
-- 每个 store 单独文件，放在 `stores/` 目录
-- 文件命名：`useXxxStore.ts`
+## 表单规范
 
-```typescript
-// stores/useUserStore.ts
-import { create } from 'zustand';
+使用 `ModalForm` 或 `DrawerForm` 实现表单弹窗：
 
-interface UserState {
-  userInfo: UserInfo | null;
-  setUserInfo: (user: UserInfo) => void;
-}
+```tsx
+import { ModalForm, ProFormText } from '@ant-design/pro-components';
 
-export const useUserStore = create<UserState>((set) => ({
-  userInfo: null,
-  setUserInfo: (user) => set({ userInfo: user }),
-}));
+<ModalForm
+  title="新增用户"
+  open={open}
+  onOpenChange={setOpen}
+  onFinish={async (values) => {
+    await createUser(values);
+    message.success('保存成功');
+    return true;
+  }}
+>
+  <ProFormText name="username" label="用户名" rules={[{ required: true }]} />
+</ModalForm>
 ```
 
----
+## 类型定义规范
 
-## 七、样式规范
+所有类型定义放在 `src/types/` 目录下：
 
-- 优先使用 Tailwind CSS 工具类
-- Ant Design 组件样式覆盖使用 CSS Modules
-- 避免内联样式对象
-
----
-
-## 八、API 请求规范
-
-- 统一封装在 `api/` 目录
-- 使用 axios 实例，统一处理错误和 token
-- 响应拦截器中解包 `Result`，业务层直接获取 `data` 部分
-- 按模块拆分文件
-
-### axios 封装示例
-
-```typescript
-// api/request.ts
-import axios from 'axios'
-import type { Result } from '@/types/common'
-
-const request = axios.create({
-  baseURL: '/api',
-  timeout: 10000
-})
-
-// 响应拦截器 - 解包 Result，直接返回 data
-request.interceptors.response.use(
-  (response) => {
-    const res = response.data as Result<any>
-    if (res.code === 200) {
-      return res.data
-    }
-    // 业务错误处理
-    return Promise.reject(new Error(res.msg))
-  },
-  (error) => {
-    // 网络错误处理
-    return Promise.reject(error)
-  }
-)
-
-export default request
-```
-
-### 类型定义
-
-```typescript
+```tsx
 // types/common.ts
 export interface Result<T> {
-  code: number
-  msg: string
-  data: T
+  code: number;
+  msg: string;
+  data: T;
 }
 
 export interface PageResult<T> {
-  list: T[]
-  total: number
-  pageNum: number
-  pageSize: number
+  list: T[];
+  total: number;
 }
 ```
 
-### API 调用示例
+## 路由配置
 
-```typescript
-// api/user.ts
-import request from './request'
-import type { UserInfo } from '@/types/user'
+在 `.umirc.ts` 中配置路由：
 
-export const getUserInfo = (id: number) => {
-  return request.get<any, UserInfo>(`/users/${id}`)
-}
-
-// 分页查询
-export const getUserList = (params: UserQuery) => {
-  return request.get<any, PageResult<UserInfo>>('/users/list', { params })
-}
+```tsx
+routes: [
+  { path: '/login', layout: false, component: './Login' },
+  { path: '/dashboard', name: '工作台', icon: 'dashboard', component: './Dashboard' },
+  {
+    path: '/system',
+    name: '系统管理',
+    icon: 'setting',
+    routes: [
+      { path: '/system/user', name: '用户管理', component: './System/User' },
+    ],
+  },
+]
 ```
 
-### 业务层使用
-
-```typescript
-// 单条数据
-const user = await getUserInfo(1)
-console.log(user.userName)
-
-// 分页数据
-const pageData = await getUserList({ pageNum: 1, pageSize: 10 })
-console.log(pageData.list)   // 用户列表
-console.log(pageData.total)  // 总记录数
-```
-
----
-
-## 九、环境配置
-
-### .env.development (开发环境)
-
-```
-VITE_API_BASE_URL=/api
-VITE_APP_TITLE=App Name (Dev)
-```
-
-### .env.production (生产环境)
-
-```
-VITE_API_BASE_URL=/api
-VITE_APP_TITLE=App Name
-```
-
-### 代码中使用环境变量
-
-```typescript
-const apiUrl = import.meta.env.VITE_API_BASE_URL
-const title = import.meta.env.VITE_APP_TITLE
-```
-
----
-
-## 十、开发环境启动
+## 常用命令
 
 ```bash
-cd ui
-yarn install
-yarn dev
-```
-
----
-
-## 十一、Docker 部署
-
-### Dockerfile
-
-```dockerfile
-# ============ 构建阶段 ============
-FROM node:18-alpine AS builder
-
-WORKDIR /app
-
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
-
-COPY . .
-RUN yarn build
-
-# ============ 运行阶段 ============
-FROM nginx:alpine
-
-COPY --from=builder /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
-```
-
-### nginx.conf
-
-```nginx
-server {
-    listen 80;
-    server_name localhost;
-    root /usr/share/nginx/html;
-    index index.html;
-
-    gzip on;
-    gzip_types text/plain text/css application/json application/javascript text/xml application/xml;
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-
-    location /api {
-        proxy_pass http://backend:8080;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2)$ {
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }
-}
-```
-
-### Docker 构建和运行
-
-```bash
-cd ui
-
-# 构建镜像
-docker build -t project-name-ui .
-
-# 运行容器
-docker run -d -p 80:80 project-name-ui
-```
-
----
-
-## 十二、Git 提交规范
-
-### 提交格式
-
-```
-<type>: <description>
-```
-
-### Type 类型
-
-| type | 说明 |
-|------|------|
-| feat | 新功能 |
-| fix | 修复 bug |
-| docs | 文档更新 |
-| style | 代码格式（不影响功能） |
-| refactor | 重构 |
-| test | 测试相关 |
-| chore | 构建/工具/依赖 |
-
-### 示例
-
-```
-feat: 添加用户登录功能
-fix: 修复用户列表分页问题
-docs: 更新 API 文档
+yarn dev      # 启动开发服务器
+yarn build    # 构建生产版本
+yarn lint     # 代码检查
 ```
