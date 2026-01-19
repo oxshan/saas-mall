@@ -1,16 +1,22 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "strict": true,
+    "baseUrl": "./",
+    "target": "esnext",
+    "moduleResolution": "node",
     "jsx": "react-jsx",
     "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "declaration": true,
     "skipLibCheck": true,
-    "baseUrl": "./src",
+    "resolveJsonModule": true,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"],
+      "@@/*": ["./src/.umi/*"],
+      "@@test/*": ["./src/.umi-test/*"]
     }
   },
-  "include": ["src/**/*", ".umirc.ts", "typings.d.ts"]
+  "include": ["./**/*.d.ts", "./**/*.ts", "./**/*.tsx"]
 }

@@ -1,6 +1,9 @@
 ---
 description: Archive a deployed OpenSpec change and update specs.
 ---
+
+The user wants to archive the following deployed change. Use the openspec instructions to archive the change and update specs.
+
 <ChangeId>
   $ARGUMENTS
 </ChangeId>
