@@ -2,6 +2,7 @@ package cc.oxshan.admin.controller;
 
 import cc.oxshan.admin.annotation.RequiresPermission;
 import cc.oxshan.admin.client.SysMenuServiceClient;
+import cc.oxshan.admin.util.HeaderUtils;
 import cc.oxshan.api.user.dto.SysMenuDTO;
 import cc.oxshan.common.core.context.ShopContext;
 import cc.oxshan.common.core.result.Result;
@@ -71,7 +72,7 @@ public class MenuController {
      */
     @GetMapping("/user-menus")
     public Result<List<SysMenuDTO>> getUserMenus() {
-        Long userId = ShopContext.getUserId();
+        Long userId = HeaderUtils.getUserId();
         List<SysMenuDTO> menus = menuServiceClient.getMenusByUserId(userId);
         return Result.ok(menus);
     }

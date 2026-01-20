@@ -21,3 +21,9 @@ dubbo:
 jwt:
   secret: your-256-bit-secret-key-here-must-be-long-enough
   expiration: 7200000
+
+
+# 日志配置
+logging:
+  level:
+    cc.oxshan.gateway: DEBUG

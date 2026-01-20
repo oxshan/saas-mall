@@ -2,6 +2,7 @@ package cc.oxshan.admin.aspect;
 
 import cc.oxshan.admin.annotation.RequiresPermission;
 import cc.oxshan.admin.service.PermissionService;
+import cc.oxshan.admin.util.HeaderUtils;
 import cc.oxshan.common.core.context.ShopContext;
 import cc.oxshan.common.core.exception.BizException;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class PermissionAspect {
     @Before("@annotation(cc.oxshan.admin.annotation.RequiresPermission)")
     public void checkPermission(JoinPoint joinPoint) {
         // 1. 获取当前用户 ID
-        Long userId = ShopContext.getUserId();
+        Long userId = HeaderUtils.getUserId();
         if (userId == null) {
             throw new BizException(401, "未登录");
         }

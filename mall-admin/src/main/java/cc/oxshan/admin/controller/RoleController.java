@@ -3,6 +3,7 @@ package cc.oxshan.admin.controller;
 import cc.oxshan.admin.annotation.RequiresPermission;
 import cc.oxshan.admin.client.SysRoleServiceClient;
 import cc.oxshan.admin.dto.AssignMenusDTO;
+import cc.oxshan.admin.util.HeaderUtils;
 import cc.oxshan.api.user.dto.SysRoleDTO;
 import cc.oxshan.common.core.context.ShopContext;
 import cc.oxshan.common.core.result.PageResult;
@@ -28,10 +29,10 @@ public class RoleController {
     @RequiresPermission("system:role:list")
     @GetMapping("/list")
     public Result<PageResult<SysRoleDTO>> listRoles(
-        @RequestParam(defaultValue = "1") Integer pageNum,
-        @RequestParam(defaultValue = "10") Integer pageSize
+        @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+        @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
     ) {
-        Long shopId = ShopContext.getShopId();
+        Long shopId = HeaderUtils.getShopId();
         PageResult<SysRoleDTO> page = roleServiceClient.listRoles(shopId, pageNum, pageSize);
         return Result.ok(page);
     }
@@ -51,7 +52,7 @@ public class RoleController {
     @RequiresPermission("system:role:add")
     @PostMapping("/add")
     public Result<Long> createRole(@RequestBody SysRoleDTO dto) {
-        dto.setShopId(ShopContext.getShopId());
+        dto.setShopId(HeaderUtils.getShopId());
         Long roleId = roleServiceClient.createRole(dto);
         return Result.ok(roleId);
     }

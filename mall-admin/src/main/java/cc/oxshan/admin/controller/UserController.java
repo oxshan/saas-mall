@@ -28,10 +28,10 @@ public class UserController {
     @RequiresPermission("system:user:list")
     @GetMapping("/list")
     public Result<PageResult<SysUserDTO>> listUsers(
-        @RequestParam(defaultValue = "1") Integer pageNum,
-        @RequestParam(defaultValue = "10") Integer pageSize
+        @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+        @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
     ) {
-        Long shopId = ShopContext.getShopId();
+        Long shopId = HeaderUtils.getShopId();
         PageResult<SysUserDTO> page = userServiceClient.listUsers(shopId, pageNum, pageSize);
         return Result.ok(page);
     }
@@ -42,7 +42,7 @@ public class UserController {
     @RequiresPermission("system:user:add")
     @PostMapping("/add")
     public Result<Long> createUser(@RequestBody SysUserDTO dto) {
-        dto.setShopId(ShopContext.getShopId());
+        dto.setShopId(HeaderUtils.getShopId());
         Long userId = userServiceClient.createUser(dto);
         return Result.ok(userId);
     }

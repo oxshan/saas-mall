@@ -11,7 +11,7 @@ import {
   Question,
   SelectLang,
 } from '@/components';
-import { currentUser as queryCurrentUser } from '@/services/ant-design-pro/api';
+import { getCurrentUser as queryCurrentUser } from '@/services/system/auth';
 import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
 import '@ant-design/v5-patch-for-react-19';
@@ -30,10 +30,12 @@ export async function getInitialState(): Promise<{
 }> {
   const fetchUserInfo = async () => {
     try {
-      const msg = await queryCurrentUser({
+      const res = await queryCurrentUser({
         skipErrorHandler: true,
       });
-      return msg.data;
+      if (res.code === 200 && res.data) {
+        return res.data;
+      }
     } catch (_error) {
       history.push(loginPath);
     }
@@ -75,9 +77,6 @@ export const layout: RunTimeLayoutConfig = ({
       render: (_, avatarChildren) => {
         return <AvatarDropdown>{avatarChildren}</AvatarDropdown>;
       },
-    },
-    waterMarkProps: {
-      content: initialState?.currentUser?.name,
     },
     footerRender: () => <Footer />,
     onPageChange: () => {
@@ -150,6 +149,6 @@ export const layout: RunTimeLayoutConfig = ({
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const request: RequestConfig = {
-  baseURL: 'https://proapi.azurewebsites.net',
+  baseURL: '/api/admin',
   ...errorConfig,
 };
