@@ -58,6 +58,10 @@
             <groupId>cc.oxshan</groupId>
             <artifactId>mall-common-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cc.oxshan</groupId>
+            <artifactId>mall-common-upload</artifactId>
+        </dependency>
         <!-- Lombok (显式声明以确保注解处理器工作) -->
         <dependency>
             <groupId>org.projectlombok</groupId>

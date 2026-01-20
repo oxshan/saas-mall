@@ -17,9 +17,7 @@
 
     <modules>
         <module>mall-common-core</module>
-        <module>mall-common-redis</module>
-        <module>mall-common-mybatis</module>
-        <module>mall-common-rocketmq</module>
+        <module>mall-common-upload</module>
     </modules>
 
 </project>

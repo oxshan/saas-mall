@@ -1,0 +1,41 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: mall-service-shop
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/saas_mall?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root123456
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      password: redis123456
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cc.oxshan.shop.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+dubbo:
+  application:
+    name: mall-service-shop
+  protocol:
+    name: dubbo
+    port: 20883
+    host: 192.168.31.157
+  registry:
+    address: nacos://localhost:8848
+    parameters:
+      register-ip: 192.168.31.157
+
+
+logging:
+  level:
+    cc.oxshan.shop: debug

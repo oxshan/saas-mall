@@ -22,6 +22,11 @@ jwt:
   secret: your-256-bit-secret-key-here-must-be-long-enough
   expiration: 7200000
 
+qiniu:
+  access-key: xxvsUnHuV849HJWVt5E4hx5ZjR_MWzU1Cj4RA3be
+  secret-key:
+  bucket: qnhub1
+  domain: http://t8nea3kby.hd-bkt.clouddn.com
 
 # 日志配置
 logging:

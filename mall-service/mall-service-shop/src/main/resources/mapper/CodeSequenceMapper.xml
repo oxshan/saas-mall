@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.oxshan.shop.mapper.CodeSequenceMapper">
+
+    <resultMap id="BaseResultMap" type="cc.oxshan.shop.entity.CodeSequence">
+        <id column="id" property="id"/>
+        <result column="prefix" property="prefix"/>
+        <result column="date_part" property="datePart"/>
+        <result column="sequence" property="sequence"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="cc.oxshan.shop.entity.CodeSequence">
+        INSERT INTO code_sequence (prefix, date_part, sequence)
+        VALUES (#{prefix}, #{datePart}, #{sequence})
+    </insert>
+
+    <update id="updateSequence">
+        UPDATE code_sequence 
+        SET sequence = sequence + 1
+        WHERE prefix = #{prefix} AND date_part = #{datePart}
+    </update>
+
+    <select id="selectByPrefixAndDate" resultMap="BaseResultMap">
+        SELECT * FROM code_sequence 
+        WHERE prefix = #{prefix} AND date_part = #{datePart}
+    </select>
+
+</mapper>

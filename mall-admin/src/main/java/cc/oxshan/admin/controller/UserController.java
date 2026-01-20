@@ -6,7 +6,6 @@ import cc.oxshan.admin.dto.AssignRolesDTO;
 import cc.oxshan.admin.dto.ResetPasswordDTO;
 import cc.oxshan.admin.util.HeaderUtils;
 import cc.oxshan.api.user.dto.SysUserDTO;
-import cc.oxshan.common.core.context.ShopContext;
 import cc.oxshan.common.core.result.PageResult;
 import cc.oxshan.common.core.result.Result;
 import lombok.RequiredArgsConstructor;

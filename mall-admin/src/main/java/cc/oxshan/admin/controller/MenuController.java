@@ -4,7 +4,6 @@ import cc.oxshan.admin.annotation.RequiresPermission;
 import cc.oxshan.admin.client.SysMenuServiceClient;
 import cc.oxshan.admin.util.HeaderUtils;
 import cc.oxshan.api.user.dto.SysMenuDTO;
-import cc.oxshan.common.core.context.ShopContext;
 import cc.oxshan.common.core.result.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

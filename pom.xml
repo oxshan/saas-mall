@@ -111,6 +111,11 @@
             </dependency>
             <dependency>
                 <groupId>cc.oxshan</groupId>
+                <artifactId>mall-common-upload</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cc.oxshan</groupId>
                 <artifactId>mall-common-redis</artifactId>
                 <version>${project.version}</version>
             </dependency>

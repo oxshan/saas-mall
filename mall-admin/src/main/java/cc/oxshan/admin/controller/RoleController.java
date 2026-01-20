@@ -5,7 +5,6 @@ import cc.oxshan.admin.client.SysRoleServiceClient;
 import cc.oxshan.admin.dto.AssignMenusDTO;
 import cc.oxshan.admin.util.HeaderUtils;
 import cc.oxshan.api.user.dto.SysRoleDTO;
-import cc.oxshan.common.core.context.ShopContext;
 import cc.oxshan.common.core.result.PageResult;
 import cc.oxshan.common.core.result.Result;
 import lombok.RequiredArgsConstructor;

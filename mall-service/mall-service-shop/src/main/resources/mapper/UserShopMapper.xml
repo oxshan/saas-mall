@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.oxshan.shop.mapper.UserShopMapper">
+
+    <resultMap id="BaseResultMap" type="cc.oxshan.shop.entity.UserShop">
+        <result column="user_id" property="userId"/>
+        <result column="shop_id" property="shopId"/>
+        <result column="is_default" property="isDefault"/>
+        <result column="created_at" property="createdAt"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="cc.oxshan.shop.entity.UserShop">
+        INSERT INTO user_shop (user_id, shop_id, is_default)
+        VALUES (#{userId}, #{shopId}, #{isDefault})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM user_shop WHERE user_id = #{userId} AND shop_id = #{shopId}
+    </delete>
+
+    <update id="updateDefault">
+        UPDATE user_shop SET is_default = 1 
+        WHERE user_id = #{userId} AND shop_id = #{shopId}
+    </update>
+
+    <update id="clearDefault">
+        UPDATE user_shop SET is_default = 0 WHERE user_id = #{userId}
+    </update>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT * FROM user_shop WHERE user_id = #{userId}
+    </select>
+
+    <select id="selectByUserIdAndShopId" resultMap="BaseResultMap">
+        SELECT * FROM user_shop WHERE user_id = #{userId} AND shop_id = #{shopId}
+    </select>
+
+</mapper>

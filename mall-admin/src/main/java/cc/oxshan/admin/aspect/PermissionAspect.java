@@ -3,7 +3,6 @@ package cc.oxshan.admin.aspect;
 import cc.oxshan.admin.annotation.RequiresPermission;
 import cc.oxshan.admin.service.PermissionService;
 import cc.oxshan.admin.util.HeaderUtils;
-import cc.oxshan.common.core.context.ShopContext;
 import cc.oxshan.common.core.exception.BizException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

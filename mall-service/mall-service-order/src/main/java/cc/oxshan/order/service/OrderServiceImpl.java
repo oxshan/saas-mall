@@ -28,7 +28,6 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(1);
         order.setCreateTime(LocalDateTime.now());
         list.add(order);
-        
         return list;
     }
 
