@@ -10,6 +10,7 @@ import {
   Footer,
   Question,
   SelectLang,
+  Shop,
 } from '@/components';
 import { getCurrentUser as queryCurrentUser } from '@/services/system/auth';
 import defaultSettings from '../config/defaultSettings';
@@ -68,6 +69,7 @@ export const layout: RunTimeLayoutConfig = ({
 }) => {
   return {
     actionsRender: () => [
+      <Shop key="shop" />,
       <Question key="doc" />,
       <SelectLang key="SelectLang" />,
     ],

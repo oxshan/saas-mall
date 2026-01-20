@@ -53,4 +53,7 @@ export default {
   'menu.system.user': '用户管理',
   'menu.system.role': '角色管理',
   'menu.system.menu': '菜单管理',
+  'menu.shop': '店铺管理',
+  'menu.shop.list': '店铺列表',
+  'menu.shop.tree': '店铺树形视图',
 };

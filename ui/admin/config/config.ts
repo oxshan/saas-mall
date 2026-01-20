@@ -143,6 +143,15 @@ export default defineConfig({
   headScripts: [
     // 解决首次加载时白屏的问题
     { src: join(PUBLIC_PATH, 'scripts/loading.js'), async: true },
+    // 高德地图安全密钥配置（必须在加载 SDK 之前）
+    { 
+      content: `window._AMapSecurityConfig = { securityJsCode: '${process.env.AMAP_SECRET || ''}' };`
+    },
+    // 高德地图 SDK
+    { 
+      src: `https://webapi.amap.com/maps?v=2.0&key=${process.env.AMAP_KEY || ''}`, 
+      async: true 
+    },
   ],
   //================ pro 插件配置 =================
   presets: ['umi-presets-pro'],

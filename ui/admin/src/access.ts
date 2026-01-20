@@ -41,5 +41,15 @@ export default function access(
     canMenuAdd: hasPermission('system:menu:add'),
     canMenuEdit: hasPermission('system:menu:edit'),
     canMenuDelete: hasPermission('system:menu:delete'),
+    
+    // 店铺管理权限
+    canShopList: hasPermission('shop:shop:list'),
+    canShopAdd: hasPermission('shop:shop:add'),
+    canShopEdit: hasPermission('shop:shop:edit'),
+    canShopDelete: hasPermission('shop:shop:delete'),
+    canShopTree: hasPermission('shop:shop:tree'),
+    
+    // 通用权限检查方法
+    canAccess: (permission: string) => hasPermission(permission),
   };
 }

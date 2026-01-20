@@ -1,5 +1,6 @@
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { SelectLang as UmiSelectLang } from '@umijs/max';
+import ShopSelector from '@/components/ShopSelector';
 
 export type SiderTheme = 'light' | 'dark';
 
@@ -29,4 +30,8 @@ export const Question: React.FC = () => {
       <QuestionCircleOutlined />
     </a>
   );
+};
+
+export const Shop: React.FC = () => {
+  return <ShopSelector />;
 };

@@ -58,6 +58,29 @@ export default [
     ],
   },
   {
+    path: '/shop',
+    name: 'shop',
+    icon: 'shop',
+    routes: [
+      {
+        path: '/shop',
+        redirect: '/shop/list',
+      },
+      {
+        path: '/shop/list',
+        name: 'list',
+        component: './shop/list',
+        access: 'canShopList',
+      },
+      {
+        path: '/shop/tree',
+        name: 'tree',
+        component: './shop/tree',
+        access: 'canShopTree',
+      },
+    ],
+  },
+  {
     name: 'list.table-list',
     icon: 'table',
     path: '/list',
